@@ -57,7 +57,6 @@ function toggleImages() {
 
 chrome.runtime.onMessage.addListener(request => {
     if (request.type === 'TOGGLE_DOGS_MSG') {
-        console.log('Got a message');
         toggleImages();
     }
 });
