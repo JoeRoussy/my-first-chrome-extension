@@ -31,20 +31,30 @@ const images = document.querySelectorAll('img');
 
 images.forEach(image => image.setAttribute('data-original-src', image.src));
 
+// TODO: Need to add handler for window resize that takes inline styles off
+
 function toggleImages() {
     images.forEach(image => {
+        const imageWidth = image.clientWidth;
+        const imageHeight = image.clientHeight;
+        const aspectRatio = Math.abs(imageHeight/imageWidth);
+
         if (firstIteration) {
             // Set the width of the image based on it's current size
-            image.style.width = image.clientWidth;
+            image.style.width = imageWidth;
+            image.style.height = imageHeight;
         }
 
-        if (hasDogImages) {
-            // Return image to normal
-            image.src = image.getAttribute('data-original-src');
-        } else {
-            // Set image to random dog
-            const randomIndex = Math.round(Math.random() * dogImages.length);
-            image.src = dogImages[randomIndex];
+        // Only swap the images if it is square enough
+        if (aspectRatio < 2 && aspectRatio > 0.5) {
+            if (hasDogImages) {
+                // Return image to normal
+                image.src = image.getAttribute('data-original-src');
+            } else {
+                // Set image to random dog
+                const randomIndex = Math.round(Math.random() * dogImages.length);
+                image.src = dogImages[randomIndex];
+            }
         }
     });
 
