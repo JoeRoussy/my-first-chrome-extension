@@ -31,7 +31,27 @@ const images = document.querySelectorAll('img');
 
 images.forEach(image => image.setAttribute('data-original-src', image.src));
 
-// TODO: Need to add handler for window resize that takes inline styles off
+window.addEventListener('resize', () => {
+    // Need to return all the images to normal and remove inline styles
+    images.forEach(image => {
+        if (image.style.width) {
+            image.style.width = '';
+        }
+
+        if (image.style.height) {
+            image.style.height = '';
+        }
+
+        const originalImageSrc = image.getAttribute('data-original-src');
+
+        if (image.src !== originalImageSrc) {
+            image.src = originalImageSrc;
+        }
+    });
+
+    hasDogImages = false;
+    firstIteration = true;
+});
 
 function toggleImages() {
     images.forEach(image => {
